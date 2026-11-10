@@ -4,7 +4,7 @@ import { EventEmitter } from 'node:events';
 import { readFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import { AlertPlugin } from '../com.ulanzi.chatgptalert.ulanziPlugin/plugin/app.js';
-import { ACTION_UUID, UlanziClient, PLUGIN_UUID } from '../com.ulanzi.chatgptalert.ulanziPlugin/plugin/ulanzi-client.js';
+import { ACTION_UUID, USAGE_UUID, UlanziClient, PLUGIN_UUID } from '../com.ulanzi.chatgptalert.ulanziPlugin/plugin/ulanzi-client.js';
 import { pluginRoot } from './helpers.js';
 
 class Host extends EventEmitter {
@@ -47,17 +47,21 @@ test('restored keys receive the pending state, inactive and removed keys receive
   assert.equal(plugin.keys.size, 0);
 });
 
-test('manifest refers to present images and exposes only the requested D200X keypad action', async () => {
+test('manifest exposes the alert and usage actions with present D200X keypad resources', async () => {
   const manifest = JSON.parse(await readFile(path.join(pluginRoot, 'manifest.json'), 'utf8'));
   assert.equal(manifest.UUID, PLUGIN_UUID);
-  assert.equal(manifest.Actions.length, 1);
+  assert.equal(manifest.Actions.length, 2);
   const action = manifest.Actions[0];
   assert.equal(action.UUID, ACTION_UUID);
-  assert.deepEqual(action.Devices, ['D200X']);
-  assert.deepEqual(action.Controllers, ['Keypad']);
-  assert.equal(action.DisableAutomaticStates, true);
-  for (const file of [manifest.CodePath, manifest.Icon, action.PropertyInspectorPath,
-    ...action.States.map((state) => state.Image), 'resources/blink.gif', 'resources/fade.gif']) {
+  assert.equal(manifest.Actions[1].UUID, USAGE_UUID);
+  for (const entry of manifest.Actions) {
+    assert.deepEqual(entry.Devices, ['D200X']);
+    assert.deepEqual(entry.Controllers, ['Keypad']);
+    assert.equal(entry.DisableAutomaticStates, true);
+  }
+  for (const file of [manifest.CodePath, manifest.Icon,
+    ...manifest.Actions.flatMap((entry) => [entry.Icon, entry.PropertyInspectorPath,
+      ...entry.States.map((state) => state.Image)]), 'resources/blink.gif', 'resources/fade.gif']) {
     await access(path.join(pluginRoot, file));
   }
 });
@@ -91,5 +95,10 @@ test('state packets preserve the physical key and instance ID in the documented 
   client.setAnimation(key, './resources/fade.gif');
   assert.deepEqual(packets[1].param.statelist[0], {
     ...key, type: 4, gifpath: './resources/fade.gif', textData: '', showtext: false
+  });
+  const usageKey = { ...key, uuid: USAGE_UUID };
+  client.setImage(usageKey, 'data:image/png;base64,test');
+  assert.deepEqual(packets[2].param.statelist[0], {
+    ...usageKey, type: 1, data: 'data:image/png;base64,test', textData: '', showtext: false
   });
 });

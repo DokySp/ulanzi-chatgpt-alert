@@ -1,8 +1,8 @@
 {
-  "Version": "1.1.0",
+  "Version": "1.2.0",
   "Author": "Personal",
   "Name": "ChatGPT 알림",
-  "Description": "ChatGPT Windows 앱의 완료·입력 요청을 선택한 애니메이션으로 표시합니다.",
+  "Description": "ChatGPT Windows 앱의 알림 애니메이션과 계정 사용량 게이지를 표시합니다.",
   "Icon": "resources/idle.png",
   "CodePath": "plugin/bootstrap.js",
   "Type": "JavaScript",
@@ -28,6 +28,19 @@
         { "Name": "알림 켜짐", "Image": "resources/on.png" },
         { "Name": "알림 꺼짐", "Image": "resources/off.png" }
       ]
+    },
+    {
+      "Name": "ChatGPT 사용량",
+      "Icon": "resources/usage.png",
+      "Tooltip": "계정의 Codex 사용률과 초기화 시간을 표시합니다. 버튼을 누르면 새로고침합니다.",
+      "UUID": "com.ulanzi.ulanzistudio.chatgptalert.usage",
+      "PropertyInspectorPath": "property-inspector/usage.html",
+      "Controllers": ["Keypad"],
+      "Devices": ["D200X"],
+      "SupportedInMultiActions": false,
+      "DisableAutomaticStates": true,
+      "state": 0,
+      "States": [{ "Name": "사용량", "Image": "resources/usage.png" }]
     }
   ]
 }

@@ -2,6 +2,7 @@ import { pathToFileURL } from 'node:url';
 import { AlertState } from './alert-state.js';
 import { LogWatcher } from './log-watcher.js';
 import { FocusMonitor } from './focus-monitor.js';
+import { UsagePlugin } from './usage-plugin.js';
 import { UlanziClient, ACTION_UUID, keyIdentity } from './ulanzi-client.js';
 
 export class AlertPlugin {
@@ -68,6 +69,7 @@ export async function start() {
   const client = new UlanziClient({ address, port });
   const plugin = new AlertPlugin(client);
   const reportError = (error) => console.error('[ChatGPT alert]', error.message);
+  const usage = new UsagePlugin(client, { onError: reportError });
   const focus = new FocusMonitor({
     onFocus: (focused, at) => plugin.state.setFocus(focused, at), onError: reportError
   });
@@ -82,6 +84,7 @@ export async function start() {
     clearInterval(parentCheck);
     watcher.stop();
     focus.stop();
+    usage.stop();
     client.close();
   };
   process.once('SIGINT', stop);

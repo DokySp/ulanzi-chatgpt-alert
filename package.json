@@ -1,10 +1,10 @@
 {
   "name": "ulanzi-chatgpt-alert",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test/alerts.test.js test/log-watcher.test.js test/plugin.test.js test/integration.test.js test/focus.integration.test.js test/settings.test.js"
+    "test": "node --experimental-websocket --test --test-concurrency=1 test/alerts.test.js test/log-watcher.test.js test/plugin.test.js test/integration.test.js test/focus.integration.test.js test/settings.test.js test/usage.test.js"
   },
   "engines": {
     "node": ">=20.12.2"

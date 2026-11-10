@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:events';
 
 export const PLUGIN_UUID = 'com.ulanzi.ulanzistudio.chatgptalert';
 export const ACTION_UUID = PLUGIN_UUID + '.alert';
+export const USAGE_UUID = PLUGIN_UUID + '.usage';
 
 export function keyIdentity(target) {
   return JSON.stringify([target.uuid, target.key, target.actionid]);
@@ -49,6 +50,10 @@ export class UlanziClient extends EventEmitter {
 
   setAnimation(target, gifpath) {
     this.setDisplay(target, { type: 4, gifpath });
+  }
+
+  setImage(target, data) {
+    this.setDisplay(target, { type: 1, data });
   }
 
   setDisplay(target, display) {
