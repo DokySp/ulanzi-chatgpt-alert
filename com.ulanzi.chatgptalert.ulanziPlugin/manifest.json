@@ -1,0 +1,33 @@
+{
+  "Version": "1.1.0",
+  "Author": "Personal",
+  "Name": "ChatGPT 알림",
+  "Description": "ChatGPT Windows 앱의 완료·입력 요청을 선택한 애니메이션으로 표시합니다.",
+  "Icon": "resources/idle.png",
+  "CodePath": "plugin/bootstrap.js",
+  "Type": "JavaScript",
+  "UUID": "com.ulanzi.ulanzistudio.chatgptalert",
+  "OS": [
+    { "Platform": "windows", "MinimumVersion": "10" }
+  ],
+  "Software": { "MinVersion": "3.4.8" },
+  "Actions": [
+    {
+      "Name": "ChatGPT 알림",
+      "Icon": "resources/idle.png",
+      "Tooltip": "완료·입력 요청 시 선택한 효과가 반복됩니다. 버튼을 누르거나 ChatGPT 앱으로 돌아가면 멈춥니다.",
+      "UUID": "com.ulanzi.ulanzistudio.chatgptalert.alert",
+      "PropertyInspectorPath": "property-inspector/inspector.html",
+      "Controllers": ["Keypad"],
+      "Devices": ["D200X"],
+      "SupportedInMultiActions": false,
+      "DisableAutomaticStates": true,
+      "state": 0,
+      "States": [
+        { "Name": "대기", "Image": "resources/idle.png" },
+        { "Name": "알림 켜짐", "Image": "resources/on.png" },
+        { "Name": "알림 꺼짐", "Image": "resources/off.png" }
+      ]
+    }
+  ]
+}

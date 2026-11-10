@@ -1,0 +1,6 @@
+{
+  "name": "ulanzi-chatgpt-alert-plugin",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module"
+}

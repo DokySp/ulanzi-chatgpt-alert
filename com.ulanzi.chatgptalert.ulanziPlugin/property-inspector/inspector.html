@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChatGPT 알림 설정</title>
+  <style>
+    body { margin: 16px; font: 13px "Segoe UI", sans-serif; color: #ececec; background: #222; }
+    label { display: block; margin-bottom: 8px; }
+    select { width: 100%; padding: 9px; border: 1px solid #555; border-radius: 5px; background: #333; color: inherit; font: inherit; }
+  </style>
+</head>
+<body>
+  <label for="effect">알림 효과</label>
+  <select id="effect" disabled>
+    <option value="blink">깜빡임</option>
+    <option value="fade">확 켜진 뒤 서서히 꺼짐</option>
+  </select>
+  <script src="inspector.js"></script>
+</body>
+</html>

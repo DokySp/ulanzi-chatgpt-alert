@@ -1,0 +1,12 @@
+{
+  "name": "ulanzi-chatgpt-alert",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/alerts.test.js test/log-watcher.test.js test/plugin.test.js test/integration.test.js test/focus.integration.test.js test/settings.test.js"
+  },
+  "engines": {
+    "node": ">=20.12.2"
+  }
+}
